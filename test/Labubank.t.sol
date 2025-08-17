@@ -1,26 +1,29 @@
 // SPDX-License-Identifier: UNLICENSED
-/*
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {Counter} from "../src/Counter.sol";
+import {Labubank} from "../src/Labubank.sol";
 
-contract CounterTest is Test {
-    Counter public counter;
+contract LabuBankTest is Test {
+    Labubank public labubank;
+
+    address user1 = address(1234);
+    address user2 = address(5678);
 
     function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+        labubank= new Labubank(address(this));
+        labubank.newLabubu(user1);
+        labubank.newLabubu(user2);
     }
 
-    function test_Increment() public {
-        counter.increment();
-        assertEq(counter.number(), 1);
+    function testSetName() public {
+      vm.prank(user1);
+      labubank.setMyLabubuName(1, "JeromePowel");
+      assertEq(labubank.myLabubuName(1), "JeromePowel");
+      vm.prank(user2);
+      labubank.setMyLabubuName(2, "JeromePowel");
+      assertEq(labubank.myLabubuName(2), "JeromePowel");
+
     }
 
-    function testFuzz_SetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
-    }
 }
-*/
